@@ -1,8 +1,8 @@
 package ru.bay.calculator;
 
 import lombok.SneakyThrows;
+import ru.bay.calculator.config.ApplicationConfig;
 import ru.bay.calculator.exception.ObjectCreationException;
-import ru.bay.calculator.property.ApplicationProperties;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
@@ -23,8 +23,8 @@ public enum ApplicationFactory {
         T instance = createObject(draft);
         // I don't want to look for an implementation for this class, because I don't want to implement interface support.
         // Guilty ^^
-        if (instance instanceof ApplicationProperties) {
-            cache.put(ApplicationProperties.class, instance);
+        if (instance instanceof ApplicationConfig) {
+            cache.put(ApplicationConfig.class, instance);
             return instance;
         }
         cache.put(draft, instance);

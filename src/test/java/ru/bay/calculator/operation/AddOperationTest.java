@@ -17,9 +17,9 @@ class AddOperationTest {
         operation = new AddOperation();
     }
 
-    @DisplayName("Should return the result of adding two numbers.")
     @ParameterizedTest(name = "{0} + {1} = {2}")
     @CsvSource(value = {"2,2,4", "25,5,30", "12458,4586,17044", "-2,2,0", "-25,5,-20", "789,485465,486254"})
+    @DisplayName("Should return the result of adding two numbers.")
     void shouldReturnTheResultOfAddingTwoNumbers(int firstNum, int secondNum, int expectedResult) {
         assertEquals(expectedResult, operation.process(firstNum, secondNum));
     }

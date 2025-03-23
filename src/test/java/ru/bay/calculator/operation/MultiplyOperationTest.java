@@ -17,9 +17,9 @@ class MultiplyOperationTest {
         operation = new MultiplyOperation();
     }
 
-    @DisplayName("Should return the result of multiplying two numbers.")
     @ParameterizedTest(name = "{0} * {1} = {2}")
     @CsvSource(value = {"2,2,4", "12,5,60", "60,60,3600", "-2,2,-4", "-25,5,-125", "3600,15,54000"})
+    @DisplayName("Should return the result of multiplying two numbers.")
     void shouldReturnTheResultOfMultiplyingTwoNumbers(int firstNum, int secondNum, int expectedResult) {
         assertEquals(expectedResult, operation.process(firstNum, secondNum));
     }

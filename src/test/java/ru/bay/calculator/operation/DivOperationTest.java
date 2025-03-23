@@ -17,9 +17,9 @@ class DivOperationTest {
         operation = new DivOperation();
     }
 
-    @DisplayName("Should return the result of dividing two numbers.")
     @ParameterizedTest(name = "{0} / {1} = {2}")
     @CsvSource(value = {"25,5,5", "125,25,5", "3600,60,60", "4568,359,12", "-25,5,-5", "1457846,454895,3", "1127,-6,-187"})
+    @DisplayName("Should return the result of dividing two numbers.")
     void shouldReturnTheResultOfDividingTwoNumbers(int firstNum, int secondNum, int expectedResult) {
         assertEquals(expectedResult, operation.process(firstNum, secondNum));
     }

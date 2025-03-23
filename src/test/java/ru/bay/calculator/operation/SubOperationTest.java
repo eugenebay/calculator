@@ -17,9 +17,9 @@ class SubOperationTest {
         operation = new SubOperation();
     }
 
-    @DisplayName("Should return the result of subtracting two numbers.")
     @ParameterizedTest(name = "{0} - {1} = {2}")
     @CsvSource(value = {"5,5,0", "10,5,5", "48514,5666,42848", "-2,2,-4", "-25,5,-30", "4451254,44585225,-40133971"})
+    @DisplayName("Should return the result of subtracting two numbers.")
     void shouldReturnTheResultOfSubtractingTwoNumbers(int firstNum, int secondNum, int expectedResult) {
         assertEquals(expectedResult, operation.process(firstNum, secondNum));
     }

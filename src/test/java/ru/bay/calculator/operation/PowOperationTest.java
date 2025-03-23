@@ -16,9 +16,9 @@ class PowOperationTest {
         operation = new PowOperation();
     }
 
-    @DisplayName("Should return the result of raising the number to the given power.")
     @ParameterizedTest(name = "{0} ^ {1} = {2}")
     @CsvSource(value = {"5,3,125", "16,6,16777216", "5,6,15625"})
+    @DisplayName("Should return the result of raising the number to the given power.")
     void shouldReturnTheResultOfRaisingTheNumberToTheGivenPower(int number, int power, int expectedResult) {
         assertEquals(expectedResult, operation.process(number, power));
     }

@@ -1,7 +1,10 @@
 package ru.bay.calculator.service;
 
+import ru.bay.calculator.context.Component;
+
 import java.util.Objects;
 
+@Component
 public class FormationService {
     public String removeSpaces(String input) {
         if (Objects.isNull(input))

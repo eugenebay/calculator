@@ -4,16 +4,20 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import ru.bay.calculator.config.ApplicationConfig;
+import ru.bay.calculator.config.ApplicationConfigStub;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ValidationServiceTest {
+    private final ApplicationConfig config = new ApplicationConfigStub();
+
     private ValidationService service;
 
     @BeforeEach
     void setService() {
-        service = new ValidationService();
+        service = new ValidationService(config);
     }
 
     @ParameterizedTest(name = "{0}")

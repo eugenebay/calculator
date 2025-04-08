@@ -9,10 +9,9 @@ public class ApplicationContext {
     }
 
     public <T> T getObject(Class<T> clazz) {
-        var store = ObjectStorage.STORAGE.getStore();
         var className = simplifyName(clazz);
-        if (store.containsKey(className)) {
-            return clazz.cast(store.get(className));
+        if (ObjectStorage.STORAGE.contains(className)) {
+            return clazz.cast(ObjectStorage.STORAGE.get(className));
         }
         return ObjectFactory.GET.createObject(clazz);
     }

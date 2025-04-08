@@ -44,9 +44,8 @@ public enum ObjectFactory implements ObjectFinder {
     }
 
     private <T> void registerAnObject(T instance) {
-        var store = ObjectStorage.STORAGE.getStore();
         var className = simplifyName(instance.getClass());
-        store.put(className, instance);
+        ObjectStorage.STORAGE.put(className, instance);
     }
 
     private Constructor<?> findConstructor(Class<?> clazz) {
@@ -56,12 +55,11 @@ public enum ObjectFactory implements ObjectFinder {
     }
 
     private Object[] getParamInstance(Class<?>[] types) {
-        var store = ObjectStorage.STORAGE.getStore();
         var params = new Object[types.length];
         for (int i = 0; i < types.length; i++) {
             var type = types[i];
-            if (store.containsKey(type.getSimpleName())) {
-                params[i] = store.get(type.getSimpleName());
+            if (ObjectStorage.STORAGE.contains(type.getSimpleName())) {
+                params[i] = ObjectStorage.STORAGE.get(type.getSimpleName());
             } else {
                 params[i] = createObject(type);
             }

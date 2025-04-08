@@ -11,13 +11,13 @@ class ObjectLoader implements ObjectFinder {
     private static final String PROJECT_PATH = "src/main/java/ru/bay/calculator";
 
     void load() {
-        var drafts = findByCondition(
+        var classes = findByCondition(
                 PROJECT_PATH,
                 draft -> CalculatorUtil.isNotInterface(draft) && draft.isAnnotationPresent(Component.class)
         );
-        if (Objects.nonNull(drafts)) {
-            ObjectStorage.STORAGE.getDrafts().addAll(drafts);
-            initializationOfObjects(ObjectStorage.STORAGE.getDrafts());
+        if (Objects.nonNull(classes)) {
+            ObjectStorage.DRAFTS.addAll(classes);
+            initializationOfObjects(ObjectStorage.DRAFTS.get());
         }
     }
 

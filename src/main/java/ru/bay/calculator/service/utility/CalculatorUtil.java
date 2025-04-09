@@ -14,8 +14,8 @@ public final class CalculatorUtil {
         throw new IllegalAccessException("Attempt to initialize final class.");
     }
 
-    public static <T> String simplifyName(Class<T> classDescription) {
-        var simpleName = classDescription.getSimpleName();
+    public static <T> String simplifyName(Class<T> clazz) {
+        var simpleName = clazz.getSimpleName();
         return simpleName.replace("Impl", "");
     }
 
@@ -27,8 +27,8 @@ public final class CalculatorUtil {
         return !draft.isInterface();
     }
 
-    public static boolean isSingleton(Class<?> classDescription) {
-        return !classDescription.isAnnotationPresent(Prototype.class);
+    public static boolean isSingleton(Class<?> clazz) {
+        return !clazz.isAnnotationPresent(Prototype.class);
     }
 
     public static BufferedReader newBufferedReaderInstance() {

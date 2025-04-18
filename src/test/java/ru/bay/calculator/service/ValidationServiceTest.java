@@ -4,20 +4,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import ru.bay.calculator.config.ApplicationConfig;
-import ru.bay.calculator.config.ApplicationConfigStub;
+import ru.bay.calculator.config.ApplicationConfigurationStub;
+import ru.bay.calculator.config.ValidationConfigurationStub;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ValidationServiceTest {
-    private final ApplicationConfig config = new ApplicationConfigStub();
-
     private ValidationService service;
 
     @BeforeEach
     void setService() {
-        service = new ValidationService(config);
+        service = new ValidationService(ApplicationConfigurationStub.getInstance(), ValidationConfigurationStub.getInstance());
     }
 
     @ParameterizedTest(name = "{0}")
@@ -32,5 +29,17 @@ class ValidationServiceTest {
     @DisplayName("Should return false when the input string does not contains the word exit.")
     void shouldReturnFalseWhenTheInputStringDoesNotContainsTheWordExit(String inputLine) {
         assertFalse(service.isExitCommand(inputLine));
+    }
+
+    @ParameterizedTest
+    @CsvSource({"123", "X+V", "11111111111111", "MMXXIII-MCMLXXXVII"})
+    void shouldDoesNotReturnExceptionWhenInputStringIsValid(String input) {
+        assertDoesNotThrow(() -> service.validationChain(input));
+    }
+
+    @ParameterizedTest
+    @CsvSource({"123y", "x+V", "11111111111111q", "Cc - X", "1", "1 ", "111111111111111111111111111111111111111"})
+    void shouldReturnIllegalArgumentExceptionWhenInputStringIsNotValid(String input) {
+        assertThrows(IllegalArgumentException.class, () -> service.validationChain(input));
     }
 }

@@ -9,9 +9,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 import static ru.bay.calculator.service.utility.CalculatorUtil.newBufferedReaderInstance;
-import static ru.bay.calculator.service.utility.CalculatorUtil.outputToConsole;
-import static ru.bay.calculator.service.utility.MessageUtil.getGoodByeMessage;
-import static ru.bay.calculator.service.utility.MessageUtil.getWelcomeMessage;
+import static ru.bay.calculator.service.utility.ConsoleUI.*;
 
 @Slf4j
 @Component
@@ -25,23 +23,41 @@ public class Application {
     }
 
     public void run() {
-        getWelcomeMessage();
+        displayWelcomeMessage();
+        runSession();
+    }
+
+    private void runSession() {
         try (var br = newBufferedReaderInstance()) {
-            handleConsoleInput(br);
+            readInputLine(br);
         } catch (IOException ex) {
-            log.error("An exception occurred while reading input - {}", ex.getMessage());
+            handleIOException(ex);
         }
     }
 
-    private void handleConsoleInput(BufferedReader br) throws IOException {
+    private void readInputLine(BufferedReader br) throws IOException {
         String input;
         while (Objects.nonNull(input = br.readLine())) {
             var trimmedInput = formationService.removeSpaces(input);
-            if (validationService.isExitCommand(trimmedInput)) {
-                getGoodByeMessage();
-                break;
-            }
-            outputToConsole(trimmedInput);
+            if (shouldTerminate(trimmedInput)) break;
+            validateAndCompute(trimmedInput);
+        }
+    }
+
+    private boolean shouldTerminate(String input) {
+        if (validationService.isExitCommand(input)) {
+            displayGoodByeMessage();
+            return true;
+        }
+        return false;
+    }
+
+    private void validateAndCompute(String input) {
+        try {
+            validationService.validationChain(input);
+            displayResult(input);
+        } catch (IllegalArgumentException | ArithmeticException ex) {
+            displayExceptionMessage(ex);
         }
     }
 }

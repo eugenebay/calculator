@@ -23,8 +23,8 @@ public final class CalculatorUtil {
         return !Files.isDirectory(path);
     }
 
-    public static boolean isNotInterface(Class<?> draft) {
-        return !draft.isInterface();
+    public static boolean isNotInterface(Class<?> clazz) {
+        return !clazz.isInterface();
     }
 
     public static boolean isSingleton(Class<?> clazz) {
@@ -33,12 +33,6 @@ public final class CalculatorUtil {
 
     public static BufferedReader newBufferedReaderInstance() {
         return new BufferedReader(new InputStreamReader(System.in));
-    }
-
-    // Suppress SonarQube console output warning.
-    @SuppressWarnings("java:S106")
-    public static void outputToConsole(String line) {
-        System.out.println(line);
     }
 
     public static Map<Integer, Character> swapKeyValues(Map<Character, Integer> map) {

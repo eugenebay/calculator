@@ -16,8 +16,7 @@ class ObjectLoader implements ObjectFinder {
                 draft -> CalculatorUtil.isNotInterface(draft) && draft.isAnnotationPresent(Component.class)
         );
         if (Objects.nonNull(classes)) {
-            ObjectStorage.DRAFTS.addAll(classes);
-            initializationOfObjects(ObjectStorage.DRAFTS.get());
+            initializationOfObjects(classes);
         }
     }
 

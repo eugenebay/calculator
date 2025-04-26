@@ -1,4 +1,4 @@
-package ru.bay.calculator.utility;
+package ru.bay.calculator.ui;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -42,7 +42,7 @@ public final class ConsoleUI {
         setStartOfSession(LocalDateTime.now(ZoneId.systemDefault()));
         System.out.println(ANSI_GREEN + String.format(
                 WELCOME_MSG,
-                "2.3",
+                "2.3.26042025",
                 System.getProperty("os.name"),
                 getFormattedTime(getStartOfSession())
         ) + ANSI_RESET);

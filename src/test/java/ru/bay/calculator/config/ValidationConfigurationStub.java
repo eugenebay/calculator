@@ -23,7 +23,7 @@ public class ValidationConfigurationStub extends ValidationConfiguration {
                 new MinAllowedInputLengthValidation(),
                 new MaxAllowedInputLengthValidation(),
                 new AllowedCharacterValidation(ApplicationConfigurationStub.getInstance()),
-                new ArithmeticSignValidation()
+                new ArithmeticOperatorValidation()
         );
     }
 

@@ -1,17 +1,15 @@
 package ru.bay.calculator.service;
 
 
-import lombok.extern.slf4j.Slf4j;
 import ru.bay.calculator.annotation.Component;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Objects;
 
+import static ru.bay.calculator.ui.ConsoleUI.*;
 import static ru.bay.calculator.utility.CalculatorUtil.newBufferedReaderInstance;
-import static ru.bay.calculator.utility.ConsoleUI.*;
 
-@Slf4j
 @Component
 public class Application {
     private final FormationService formationService;

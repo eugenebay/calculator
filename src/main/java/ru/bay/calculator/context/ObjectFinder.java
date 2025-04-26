@@ -19,12 +19,12 @@ interface ObjectFinder {
 
     @SneakyThrows
     default List<Class<?>> findByCondition(String location, Predicate<Class<?>> predicate) {
-        var drafts = new ArrayList<Class<?>>();
+        var classes = new ArrayList<Class<?>>();
         var originalPath = Path.of(location);
         try (var stream = Files.walk(originalPath)) {
-            stream.forEach(path -> processThePathAndAddToContainerByCondition(path, predicate, drafts));
+            stream.forEach(path -> processThePathAndAddToContainerByCondition(path, predicate, classes));
         }
-        return drafts;
+        return classes;
     }
 
     @SneakyThrows

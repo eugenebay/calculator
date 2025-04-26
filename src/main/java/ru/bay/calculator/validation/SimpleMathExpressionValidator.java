@@ -5,12 +5,12 @@ import java.util.regex.Pattern;
 public class SimpleMathExpressionValidator implements Validation {
     private static final String EXCEPTION_MESSAGE =
             "Invalid math expression format. Expected pattern - [number|roman][operator][number|roman]";
-    private static final int LOWER_LIMIT_OF_REPETITION = 2;
-    private static final int UPPER_LIMIT_OF_REPETITION = 10;
+    private static final int LOWER_LIMIT_OF_REPEAT = 2;
+    private static final int UPPER_LIMIT_OF_REPEAT = 10;
     private static final String REGEX = String.format(
             "^([IVXLCDM]+|\\d+)([+\\-*/^]([IVXLCDM]+|\\d+)){%d,%d}$",
-            LOWER_LIMIT_OF_REPETITION,
-            UPPER_LIMIT_OF_REPETITION
+            LOWER_LIMIT_OF_REPEAT,
+            UPPER_LIMIT_OF_REPEAT
     );
     private static final Pattern PATTERN = Pattern.compile(REGEX);
 

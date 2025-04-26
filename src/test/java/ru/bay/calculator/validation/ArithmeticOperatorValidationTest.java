@@ -7,12 +7,12 @@ import org.junit.jupiter.params.provider.CsvSource;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class ArithmeticSignValidationTest {
-    private ArithmeticSignValidation validation;
+class ArithmeticOperatorValidationTest {
+    private ArithmeticOperatorValidation validation;
 
     @BeforeEach
     void setValidation() {
-        validation = new ArithmeticSignValidation();
+        validation = new ArithmeticOperatorValidation();
     }
 
     @ParameterizedTest

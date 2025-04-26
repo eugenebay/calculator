@@ -6,12 +6,12 @@ import ru.bay.calculator.validation.rule.Rule;
 
 import java.util.List;
 
-public class ArithmeticSignValidation implements Validation {
+public class ArithmeticOperatorValidation implements Validation {
     private static final String RULE_PATH = "src/main/java/ru/bay/calculator/validation/rule";
 
     private final List<Rule> rules;
 
-    public ArithmeticSignValidation() {
+    public ArithmeticOperatorValidation() {
         this.rules = populateRules();
     }
 

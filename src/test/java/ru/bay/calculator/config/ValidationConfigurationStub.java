@@ -1,9 +1,6 @@
 package ru.bay.calculator.config;
 
-import ru.bay.calculator.validation.AllowedCharacterValidation;
-import ru.bay.calculator.validation.MaxAllowedInputLengthValidation;
-import ru.bay.calculator.validation.MinAllowedInputLengthValidation;
-import ru.bay.calculator.validation.Validation;
+import ru.bay.calculator.validation.*;
 
 import java.util.List;
 
@@ -25,7 +22,8 @@ public class ValidationConfigurationStub extends ValidationConfiguration {
         return List.of(
                 new MinAllowedInputLengthValidation(),
                 new MaxAllowedInputLengthValidation(),
-                new AllowedCharacterValidation(ApplicationConfigurationStub.getInstance())
+                new AllowedCharacterValidation(ApplicationConfigurationStub.getInstance()),
+                new ArithmeticSignValidation()
         );
     }
 

@@ -1,8 +1,11 @@
-package ru.bay.calculator.service.utility;
+package ru.bay.calculator.utility;
 
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -24,7 +27,10 @@ public final class ConsoleUI {
                \\_____\\ \\\\\t\tMIT License.
                 \\_____\\/\t\t%s, %s
             """;
-    private static final String GOOD_BYE_MSG = "Exiting the program...";
+    private static final String GOOD_BYE_MSG = "Exiting the program. [Session duration - %s s.]%n";
+    @Setter
+    @Getter
+    private static LocalDateTime startOfSession;
 
     private ConsoleUI() throws IllegalAccessException {
         throw new IllegalAccessException("Attempt to initialize final class.");
@@ -33,21 +39,23 @@ public final class ConsoleUI {
     // Suppress SonarQube console output warning.
     @SuppressWarnings("java:S106")
     public static void displayWelcomeMessage() {
-        System.out.println(ANSI_GREEN +
-                String.format(WELCOME_MSG,
-                        "2.2",
-                        System.getProperty("os.name"),
-                        getFormattedTime()) +
-                ANSI_RESET);
+        setStartOfSession(LocalDateTime.now(ZoneId.systemDefault()));
+        System.out.println(ANSI_GREEN + String.format(
+                WELCOME_MSG,
+                "2.3",
+                System.getProperty("os.name"),
+                getFormattedTime(getStartOfSession())
+        ) + ANSI_RESET);
     }
 
-    private static String getFormattedTime() {
-        return LocalDateTime.now(ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("dd.MM.yyyy - HH:mm"));
+    private static String getFormattedTime(LocalDateTime localDateTime) {
+        return localDateTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy - HH:mm"));
     }
 
     @SuppressWarnings("java:S106")
     public static void displayGoodByeMessage() {
-        System.err.println(GOOD_BYE_MSG);
+        System.err.printf(GOOD_BYE_MSG, Duration.between(getStartOfSession(), LocalDateTime.now(ZoneId.systemDefault()))
+                .getSeconds());
     }
 
     @SuppressWarnings("java:S106")

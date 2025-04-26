@@ -1,6 +1,7 @@
-package ru.bay.calculator.service.utility;
+package ru.bay.calculator.utility;
 
-import ru.bay.calculator.context.Prototype;
+import ru.bay.calculator.annotation.Disabled;
+import ru.bay.calculator.annotation.Prototype;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -23,8 +24,16 @@ public final class CalculatorUtil {
         return !Files.isDirectory(path);
     }
 
+    public static boolean isNotInterfaceAndNotDisabled(Class<?> clazz) {
+        return isNotInterface(clazz) && isNotDisabled(clazz);
+    }
+
     public static boolean isNotInterface(Class<?> clazz) {
         return !clazz.isInterface();
+    }
+
+    public static boolean isNotDisabled(Class<?> clazz) {
+        return !clazz.isAnnotationPresent(Disabled.class);
     }
 
     public static boolean isSingleton(Class<?> clazz) {

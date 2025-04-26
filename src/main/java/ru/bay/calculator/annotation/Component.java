@@ -1,8 +1,8 @@
-package ru.bay.calculator.context;
+package ru.bay.calculator.annotation;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Prototype {
+public @interface Component {
 }

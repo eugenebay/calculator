@@ -1,7 +1,8 @@
 package ru.bay.calculator.context;
 
 import lombok.extern.slf4j.Slf4j;
-import ru.bay.calculator.service.utility.CalculatorUtil;
+import ru.bay.calculator.annotation.Component;
+import ru.bay.calculator.utility.CalculatorUtil;
 
 import java.util.List;
 import java.util.Objects;
@@ -13,7 +14,7 @@ class ObjectLoader implements ObjectFinder {
     void load() {
         var classes = findByCondition(
                 PROJECT_PATH,
-                draft -> CalculatorUtil.isNotInterface(draft) && draft.isAnnotationPresent(Component.class)
+                clazz -> CalculatorUtil.isNotInterface(clazz) && clazz.isAnnotationPresent(Component.class)
         );
         if (Objects.nonNull(classes)) {
             initializationOfObjects(classes);

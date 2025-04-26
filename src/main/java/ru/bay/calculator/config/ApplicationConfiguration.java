@@ -2,23 +2,30 @@ package ru.bay.calculator.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import lombok.Getter;
 import lombok.SneakyThrows;
+import ru.bay.calculator.annotation.Component;
 import ru.bay.calculator.config.property.ApplicationProperties;
-import ru.bay.calculator.config.property.ApplicationPropertiesMapper;
-import ru.bay.calculator.context.Component;
+
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 public class ApplicationConfiguration {
     private static final String DEFAULT_PROPERTIES_FILE_NAME = "application.yml";
 
-    private final ApplicationProperties properties;
+    @Getter
+    private final String quitWord;
+    private final Set<Character> allowedCharacters;
 
     public ApplicationConfiguration() {
-        this.properties = newPropertiesInstance();
+        final ApplicationProperties properties = newPropertiesInstance();
+        this.quitWord = properties.getQuitWord();
+        this.allowedCharacters = populateAllowedCharacters(properties);
     }
 
-    public ApplicationProperties getProperties() {
-        return ApplicationPropertiesMapper.INSTANCE.copy(properties);
+    public Set<Character> getAllowedCharacters() {
+        return Set.copyOf(allowedCharacters);
     }
 
     @SneakyThrows
@@ -27,5 +34,12 @@ public class ApplicationConfiguration {
         try (var inputStream = this.getClass().getClassLoader().getResourceAsStream(DEFAULT_PROPERTIES_FILE_NAME)) {
             return mapper.readValue(inputStream, ApplicationProperties.class);
         }
+    }
+
+    private Set<Character> populateAllowedCharacters(ApplicationProperties properties) {
+        return properties.getChars()
+                .chars()
+                .mapToObj(intRepresentationOfChar -> (char) intRepresentationOfChar)
+                .collect(Collectors.toSet());
     }
 }

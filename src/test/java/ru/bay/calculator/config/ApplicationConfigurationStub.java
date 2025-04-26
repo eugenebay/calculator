@@ -1,19 +1,11 @@
 package ru.bay.calculator.config;
 
-import ru.bay.calculator.config.property.ApplicationProperties;
-
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ApplicationConfigurationStub extends ApplicationConfiguration {
-    private static final String STOP_WORD = "exit";
-    private static final String CHARS = "1234567890IVXLCDM";
-    private static final Map<String, String> OPERATORS = Map.of(
-            "+", "",
-            "-", "",
-            "*", "",
-            "/", "",
-            "^", ""
-    );
+    private static final String QUIT_WORD = "exit";
+    private static final Set<Character> SIGNS = Set.of('+', '-', '*', '/', '^');
     private static boolean isInstanceCreated = false;
 
     private ApplicationConfigurationStub() {
@@ -27,13 +19,32 @@ public class ApplicationConfigurationStub extends ApplicationConfiguration {
     }
 
     @Override
-    public ApplicationProperties getProperties() {
-        var props = new ApplicationProperties();
-        props.setQuitWord(STOP_WORD);
-        props.setChars(CHARS);
-        props.setOperators(OPERATORS);
-        props.setRomans(null); //TODO
-        return props;
+    public String getQuitWord() {
+        return QUIT_WORD;
+    }
+
+    @Override
+    public Set<Character> getAllowedCharacters() {
+        var set = new HashSet<Character>();
+        set.add('1');
+        set.add('2');
+        set.add('3');
+        set.add('4');
+        set.add('5');
+        set.add('6');
+        set.add('7');
+        set.add('8');
+        set.add('9');
+        set.add('0');
+        set.add('I');
+        set.add('V');
+        set.add('X');
+        set.add('L');
+        set.add('C');
+        set.add('D');
+        set.add('M');
+        set.addAll(SIGNS);
+        return Set.copyOf(set);
     }
 
     private static class TestApplicationConfigurationHolder {

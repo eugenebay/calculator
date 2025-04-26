@@ -1,5 +1,5 @@
 quit-word: "exit"
-chars: "1234567890IVXLCDM"
+chars: "1234567890IVXLCDM+-*/^"
 operators:
   "+": "Add"
   "-": "Sub"

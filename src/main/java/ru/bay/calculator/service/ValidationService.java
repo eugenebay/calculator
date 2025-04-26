@@ -2,7 +2,7 @@ package ru.bay.calculator.service;
 
 import ru.bay.calculator.config.ApplicationConfiguration;
 import ru.bay.calculator.config.ValidationConfiguration;
-import ru.bay.calculator.context.Component;
+import ru.bay.calculator.annotation.Component;
 
 import java.util.Objects;
 
@@ -17,9 +17,8 @@ public class ValidationService {
     }
 
     public boolean isExitCommand(String input) {
-        var quitWord = applicationConfig.getProperties().getQuitWord();
         if (Objects.isNull(input)) return false;
-        return input.toLowerCase().contains(quitWord);
+        return input.toLowerCase().contains(applicationConfig.getQuitWord());
     }
 
     public void validationChain(String input) throws IllegalArgumentException {

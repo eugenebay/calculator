@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import static java.lang.invoke.MethodType.methodType;
-import static ru.bay.calculator.service.utility.CalculatorUtil.isSingleton;
-import static ru.bay.calculator.service.utility.CalculatorUtil.simplifyName;
+import static ru.bay.calculator.utility.CalculatorUtil.isSingleton;
+import static ru.bay.calculator.utility.CalculatorUtil.simplifyName;
 
 // Suppress SonarQube enum singleton warning.
 @SuppressWarnings("java:S6548")
@@ -23,29 +23,26 @@ public enum ObjectFactory implements ObjectFinder {
     @SneakyThrows
     @SuppressWarnings("unchecked")
     public <T> T createObject(Class<T> clazz) {
+        T instance;
         try {
-            T instance = (T) lookup.findConstructor(clazz, methodType(void.class))
+            instance = (T) lookup.findConstructor(clazz, methodType(void.class))
                     .invoke();
-            if (isSingleton(clazz)) {
-                registerAnObject(instance);
-            }
-            return instance;
         } catch (NoSuchMethodException ex) {
             var con = findConstructor(clazz);
             var types = con.getParameterTypes();
             var param = getParamInstance(types);
-            T instance = (T) lookup.findConstructor(clazz, methodType(void.class, types))
+            instance = (T) lookup.findConstructor(clazz, methodType(void.class, types))
                     .invokeWithArguments(param);
-            if (isSingleton(clazz)) {
-                registerAnObject(instance);
-            }
-            return instance;
         }
+        return isSingleton(clazz)
+                ? registerAnObject(instance)
+                : instance;
     }
 
-    private <T> void registerAnObject(T instance) {
+    private <T> T registerAnObject(T instance) {
         var className = simplifyName(instance.getClass());
         ObjectStorage.STORAGE.put(className, instance);
+        return instance;
     }
 
     private Constructor<?> findConstructor(Class<?> clazz) {

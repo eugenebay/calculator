@@ -2,14 +2,14 @@ package ru.bay.calculator.service;
 
 
 import lombok.extern.slf4j.Slf4j;
-import ru.bay.calculator.context.Component;
+import ru.bay.calculator.annotation.Component;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Objects;
 
-import static ru.bay.calculator.service.utility.CalculatorUtil.newBufferedReaderInstance;
-import static ru.bay.calculator.service.utility.ConsoleUI.*;
+import static ru.bay.calculator.utility.CalculatorUtil.newBufferedReaderInstance;
+import static ru.bay.calculator.utility.ConsoleUI.*;
 
 @Slf4j
 @Component

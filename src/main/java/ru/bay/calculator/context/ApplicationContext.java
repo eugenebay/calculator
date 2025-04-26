@@ -1,6 +1,6 @@
 package ru.bay.calculator.context;
 
-import static ru.bay.calculator.service.utility.CalculatorUtil.simplifyName;
+import static ru.bay.calculator.utility.CalculatorUtil.simplifyName;
 
 public class ApplicationContext {
     public ApplicationContext() {

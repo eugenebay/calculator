@@ -1,8 +1,8 @@
 package ru.bay.calculator.config;
 
-import ru.bay.calculator.context.Component;
+import ru.bay.calculator.annotation.Component;
 import ru.bay.calculator.context.ObjectFactory;
-import ru.bay.calculator.service.utility.CalculatorUtil;
+import ru.bay.calculator.utility.CalculatorUtil;
 import ru.bay.calculator.validation.Validation;
 
 import java.util.List;
@@ -22,11 +22,11 @@ public class ValidationConfiguration {
     }
 
     private List<Validation> populateValidations() {
-        var classes = ObjectFactory.GET.findByCondition(
-                VALIDATION_PATH,
-                clazz -> CalculatorUtil.isNotInterface(clazz) && Validation.class.isAssignableFrom(clazz)
-        );
-        return classes.stream()
+        return ObjectFactory.GET.findByCondition(
+                        VALIDATION_PATH,
+                        clazz -> CalculatorUtil.isNotInterfaceAndNotDisabled(clazz)
+                                && Validation.class.isAssignableFrom(clazz))
+                .stream()
                 .map(clazz -> (Validation) ObjectFactory.GET.createObject(clazz))
                 .toList();
     }

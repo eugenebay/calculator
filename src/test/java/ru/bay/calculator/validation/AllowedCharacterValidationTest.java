@@ -24,7 +24,7 @@ class AllowedCharacterValidationTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"z", "u", "11111y", "IVXy", "5+f"})
+    @CsvSource({"z", "u", "11111y", "IVXy", "5+f", "X+A", "Y^X"})
     void shouldReturnIllegalArgumentExceptionWhenInputStringDoesNotContainsAllowedCharacters(String input) {
         assertThrows(IllegalArgumentException.class, () -> validation.validate(input));
     }

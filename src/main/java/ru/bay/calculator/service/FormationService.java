@@ -1,6 +1,6 @@
 package ru.bay.calculator.service;
 
-import ru.bay.calculator.context.Component;
+import ru.bay.calculator.annotation.Component;
 
 import java.util.Objects;
 

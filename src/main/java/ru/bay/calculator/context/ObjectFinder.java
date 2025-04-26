@@ -9,12 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
-import static ru.bay.calculator.service.utility.CalculatorUtil.isNotDirectory;
+import static ru.bay.calculator.utility.CalculatorUtil.isNotDirectory;
 
 interface ObjectFinder {
     String JAVA_EXTENSION = ".java";
     String EMPTY_STRING_FOR_REPLACEMENT = "";
-    String RU_PREFIX = "ru";
+    String RU_PREFIX = "ru\\";
     Character DOT_CHAR = '.';
 
     @SneakyThrows
@@ -36,8 +36,8 @@ interface ObjectFinder {
         if (isNotDirectory(path)) {
             var file = new File(path.toUri());
             var className = transformToClassName(file);
-            var draft = Class.forName(className);
-            if (predicate.test(draft)) container.add(draft);
+            var clazz = Class.forName(className);
+            if (predicate.test(clazz)) container.add(clazz);
         }
     }
 

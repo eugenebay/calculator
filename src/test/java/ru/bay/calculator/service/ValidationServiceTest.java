@@ -32,7 +32,7 @@ class ValidationServiceTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"123", "X+V", "11111111111111", "MMXXIII-MCMLXXXVII"})
+    @CsvSource({"123^6", "X+V", "1111111+1111111", "MMXXIII-MCMLXXXVII"})
     void shouldDoesNotReturnExceptionWhenInputStringIsValid(String input) {
         assertDoesNotThrow(() -> service.validationChain(input));
     }

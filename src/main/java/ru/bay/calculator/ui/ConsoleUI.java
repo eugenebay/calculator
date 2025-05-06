@@ -3,6 +3,8 @@ package ru.bay.calculator.ui;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import ru.bay.calculator.annotation.Component;
+import ru.bay.calculator.config.ApplicationConfiguration;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -11,7 +13,8 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
 @Slf4j
-public final class ConsoleUI {
+@Component
+public class ConsoleUI {
     public static final String ANSI_GREEN = "\u001B[32m";
     public static final String ANSI_RESET = "\u001B[0m";
     private static final String WELCOME_MSG = """
@@ -28,47 +31,49 @@ public final class ConsoleUI {
                 \\_____\\/\t\t%s, %s
             """;
     private static final String GOOD_BYE_MSG = "Exiting the program. [Session duration - %s s.]%n";
+
+    private final ApplicationConfiguration applicationConfig;
     @Setter
     @Getter
-    private static LocalDateTime startOfSession;
+    private LocalDateTime startOfSession;
 
-    private ConsoleUI() throws IllegalAccessException {
-        throw new IllegalAccessException("Attempt to initialize final class.");
+    public ConsoleUI(ApplicationConfiguration applicationConfig) {
+        this.applicationConfig = applicationConfig;
     }
 
     // Suppress SonarQube console output warning.
     @SuppressWarnings("java:S106")
-    public static void displayWelcomeMessage() {
+    public void displayWelcomeMessage() {
         setStartOfSession(LocalDateTime.now(ZoneId.systemDefault()));
         System.out.println(ANSI_GREEN + String.format(
                 WELCOME_MSG,
-                "2.3.26042025",
+                applicationConfig.getVersion(),
                 System.getProperty("os.name"),
                 getFormattedTime(getStartOfSession())
         ) + ANSI_RESET);
     }
 
-    private static String getFormattedTime(LocalDateTime localDateTime) {
+    private String getFormattedTime(LocalDateTime localDateTime) {
         return localDateTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy - HH:mm"));
     }
 
     @SuppressWarnings("java:S106")
-    public static void displayGoodByeMessage() {
+    public void displayGoodByeMessage() {
         System.err.printf(GOOD_BYE_MSG, Duration.between(getStartOfSession(), LocalDateTime.now(ZoneId.systemDefault()))
                 .getSeconds());
     }
 
     @SuppressWarnings("java:S106")
-    public static void displayResult(String line) {
+    public void displayResult(String line) {
         System.out.println(line);
     }
 
     @SuppressWarnings("java:S106")
-    public static void displayExceptionMessage(Exception ex) {
+    public void displayExceptionMessage(Exception ex) {
         System.err.println(ex.getMessage());
     }
 
-    public static void handleIOException(IOException ex) {
+    public void handleException(IOException ex) {
         log.error("An exception occurred while reading input - {}", ex.getMessage());
     }
 }

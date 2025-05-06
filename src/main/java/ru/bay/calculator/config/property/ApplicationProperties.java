@@ -9,6 +9,7 @@ import java.util.Map;
 @Getter
 @Setter
 public class ApplicationProperties {
+    private String version;
     @JsonProperty("quit-word")
     private String quitWord;
     private String chars;

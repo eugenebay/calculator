@@ -3,18 +3,38 @@ package ru.bay.calculator.service;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 import ru.bay.calculator.config.ApplicationConfigurationStub;
 import ru.bay.calculator.config.ValidationConfigurationStub;
+
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ValidationServiceTest {
+    private static final String EXPECTED_EXPRESSION = "5+5";
+
     private ValidationService service;
 
     @BeforeEach
     void setService() {
         service = new ValidationService(ApplicationConfigurationStub.getInstance(), ValidationConfigurationStub.getInstance());
+    }
+
+    @ParameterizedTest(name = "{0} = {1}")
+    @MethodSource("getArgumentsForRemoveSpacesMethod")
+    @DisplayName("Should return a string without whitespaces .")
+    void shouldReturnStringWithoutSpaces(String expected, String inputString) {
+        assertEquals(expected, service.removeSpaces(inputString));
+    }
+
+    @ParameterizedTest(name = "{0} = {1}")
+    @MethodSource("getComplexArgumentsForRemoveSpacesMethod")
+    @DisplayName("Should return a string without whitespaces .")
+    void shouldReturnStringWithoutSpacesWithComplexArguments(String expected, String inputString) {
+        assertEquals(expected, service.removeSpaces(inputString));
     }
 
     @ParameterizedTest(name = "{0}")
@@ -41,5 +61,24 @@ class ValidationServiceTest {
     @CsvSource({"123y", "x+V", "11111111111111q", "Cc - X", "1", "1 ", "111111111111111111111111111111111111111"})
     void shouldReturnIllegalArgumentExceptionWhenInputStringIsNotValid(String input) {
         assertThrows(IllegalArgumentException.class, () -> service.validationChain(input));
+    }
+
+    private static Stream<Arguments> getArgumentsForRemoveSpacesMethod() {
+        return Stream.of(
+                Arguments.of(EXPECTED_EXPRESSION, EXPECTED_EXPRESSION),
+                Arguments.of(EXPECTED_EXPRESSION, "5 + 5"),
+                Arguments.of(EXPECTED_EXPRESSION, "  5   + 5"),
+                Arguments.of(EXPECTED_EXPRESSION, "  5+5   "),
+                Arguments.of(EXPECTED_EXPRESSION, "        5 +   5          ")
+        );
+    }
+
+    private static Stream<Arguments> getComplexArgumentsForRemoveSpacesMethod() {
+        return Stream.of(
+                Arguments.of("-5--5", " - 5 - -5"),
+                Arguments.of("-5*X", " -    5  *   X    "),
+                Arguments.of("1469/MCDLXIX", "1469   /        MCDLXIX  ")
+
+        );
     }
 }

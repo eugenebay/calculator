@@ -11,15 +11,16 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
+@Getter
 public class ApplicationConfiguration {
     private static final String DEFAULT_PROPERTIES_FILE_NAME = "application.yml";
-
-    @Getter
+    private final String version;
     private final String quitWord;
     private final Set<Character> allowedCharacters;
 
     public ApplicationConfiguration() {
         final ApplicationProperties properties = newPropertiesInstance();
+        this.version = properties.getVersion();
         this.quitWord = properties.getQuitWord();
         this.allowedCharacters = populateAllowedCharacters(properties);
     }
@@ -30,16 +31,16 @@ public class ApplicationConfiguration {
 
     @SneakyThrows
     private ApplicationProperties newPropertiesInstance() {
-        ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
+        var objectMapper = new ObjectMapper(new YAMLFactory());
         try (var inputStream = this.getClass().getClassLoader().getResourceAsStream(DEFAULT_PROPERTIES_FILE_NAME)) {
-            return mapper.readValue(inputStream, ApplicationProperties.class);
+            return objectMapper.readValue(inputStream, ApplicationProperties.class);
         }
     }
 
     private Set<Character> populateAllowedCharacters(ApplicationProperties properties) {
         return properties.getChars()
                 .chars()
-                .mapToObj(intRepresentationOfChar -> (char) intRepresentationOfChar)
+                .mapToObj(integerRepresentation -> (char) integerRepresentation)
                 .collect(Collectors.toSet());
     }
 }

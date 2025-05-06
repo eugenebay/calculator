@@ -1,3 +1,4 @@
+version: ${project.version}
 quit-word: "exit"
 chars: "1234567890IVXLCDM+-*/^"
 operators:

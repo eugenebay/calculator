@@ -2,26 +2,26 @@ package ru.bay.calculator.service;
 
 
 import ru.bay.calculator.annotation.Component;
+import ru.bay.calculator.ui.ConsoleUI;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Objects;
 
-import static ru.bay.calculator.ui.ConsoleUI.*;
 import static ru.bay.calculator.utility.CalculatorUtil.newBufferedReaderInstance;
 
 @Component
 public class Application {
-    private final FormationService formationService;
+    private final ConsoleUI consoleUI;
     private final ValidationService validationService;
 
-    public Application(FormationService formationService, ValidationService validationService) {
-        this.formationService = formationService;
+    public Application(ConsoleUI consoleUI, ValidationService validationService) {
+        this.consoleUI = consoleUI;
         this.validationService = validationService;
     }
 
     public void run() {
-        displayWelcomeMessage();
+        consoleUI.displayWelcomeMessage();
         runSession();
     }
 
@@ -29,14 +29,14 @@ public class Application {
         try (var br = newBufferedReaderInstance()) {
             readInputLine(br);
         } catch (IOException ex) {
-            handleIOException(ex);
+            consoleUI.handleException(ex);
         }
     }
 
     private void readInputLine(BufferedReader br) throws IOException {
         String input;
         while (Objects.nonNull(input = br.readLine())) {
-            var trimmedInput = formationService.removeSpaces(input);
+            var trimmedInput = validationService.removeSpaces(input);
             if (shouldTerminate(trimmedInput)) break;
             validateAndCompute(trimmedInput);
         }
@@ -44,7 +44,7 @@ public class Application {
 
     private boolean shouldTerminate(String input) {
         if (validationService.isExitCommand(input)) {
-            displayGoodByeMessage();
+            consoleUI.displayGoodByeMessage();
             return true;
         }
         return false;
@@ -53,9 +53,9 @@ public class Application {
     private void validateAndCompute(String input) {
         try {
             validationService.validationChain(input);
-            displayResult(input);
+            consoleUI.displayResult(input);
         } catch (IllegalArgumentException | ArithmeticException ex) {
-            displayExceptionMessage(ex);
+            consoleUI.displayExceptionMessage(ex);
         }
     }
 }

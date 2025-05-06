@@ -1,8 +1,8 @@
 package ru.bay.calculator.service;
 
+import ru.bay.calculator.annotation.Component;
 import ru.bay.calculator.config.ApplicationConfiguration;
 import ru.bay.calculator.config.ValidationConfiguration;
-import ru.bay.calculator.annotation.Component;
 
 import java.util.Objects;
 
@@ -14,6 +14,11 @@ public class ValidationService {
     public ValidationService(ApplicationConfiguration applicationConfig, ValidationConfiguration validationConfig) {
         this.applicationConfig = applicationConfig;
         this.validationConfig = validationConfig;
+    }
+
+    public String removeSpaces(String input) {
+        if (Objects.isNull(input)) throw new IllegalArgumentException("Input string cannot be null");
+        return input.replaceAll("\\s", "");
     }
 
     public boolean isExitCommand(String input) {

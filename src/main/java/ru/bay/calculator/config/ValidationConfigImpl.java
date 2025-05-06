@@ -8,12 +8,12 @@ import ru.bay.calculator.validation.Validation;
 import java.util.List;
 
 @Component
-public class ValidationConfiguration {
+public class ValidationConfigImpl implements ValidationConfig {
     private static final String VALIDATION_PATH = "src/main/java/ru/bay/calculator/validation";
 
     private final List<Validation> validations;
 
-    public ValidationConfiguration() {
+    public ValidationConfigImpl() {
         this.validations = populateValidations();
     }
 

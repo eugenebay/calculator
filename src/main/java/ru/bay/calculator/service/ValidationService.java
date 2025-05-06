@@ -1,17 +1,17 @@
 package ru.bay.calculator.service;
 
 import ru.bay.calculator.annotation.Component;
-import ru.bay.calculator.config.ApplicationConfiguration;
-import ru.bay.calculator.config.ValidationConfiguration;
+import ru.bay.calculator.config.ApplicationConfig;
+import ru.bay.calculator.config.ValidationConfig;
 
 import java.util.Objects;
 
 @Component
 public class ValidationService {
-    private final ApplicationConfiguration applicationConfig;
-    private final ValidationConfiguration validationConfig;
+    private final ApplicationConfig applicationConfig;
+    private final ValidationConfig validationConfig;
 
-    public ValidationService(ApplicationConfiguration applicationConfig, ValidationConfiguration validationConfig) {
+    public ValidationService(ApplicationConfig applicationConfig, ValidationConfig validationConfig) {
         this.applicationConfig = applicationConfig;
         this.validationConfig = validationConfig;
     }

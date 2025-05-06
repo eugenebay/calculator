@@ -6,8 +6,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
-import ru.bay.calculator.config.ApplicationConfigurationStub;
-import ru.bay.calculator.config.ValidationConfigurationStub;
+import ru.bay.calculator.config.ApplicationConfigStub;
+import ru.bay.calculator.config.ValidationConfigStub;
 
 import java.util.stream.Stream;
 
@@ -20,7 +20,7 @@ class ValidationServiceTest {
 
     @BeforeEach
     void setService() {
-        service = new ValidationService(ApplicationConfigurationStub.getInstance(), ValidationConfigurationStub.getInstance());
+        service = new ValidationService(ApplicationConfigStub.getInstance(), ValidationConfigStub.getInstance());
     }
 
     @ParameterizedTest(name = "{0} = {1}")

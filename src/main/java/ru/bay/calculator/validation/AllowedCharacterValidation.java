@@ -1,12 +1,12 @@
 package ru.bay.calculator.validation;
 
-import ru.bay.calculator.config.ApplicationConfiguration;
+import ru.bay.calculator.config.ApplicationConfig;
 
 public class AllowedCharacterValidation implements Validation {
-    private final ApplicationConfiguration config;
+    private final ApplicationConfig applicationConfig;
 
-    public AllowedCharacterValidation(ApplicationConfiguration config) {
-        this.config = config;
+    public AllowedCharacterValidation(ApplicationConfig applicationConfig) {
+        this.applicationConfig = applicationConfig;
     }
 
     @Override
@@ -18,6 +18,6 @@ public class AllowedCharacterValidation implements Validation {
     }
 
     private boolean allowedCharactersDoesNotContain(char ch) {
-        return !config.getAllowedCharacters().contains(ch);
+        return !applicationConfig.getAllowedCharacters().contains(ch);
     }
 }

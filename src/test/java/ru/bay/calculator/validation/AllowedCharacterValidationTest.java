@@ -4,7 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import ru.bay.calculator.config.ApplicationConfigurationStub;
+import ru.bay.calculator.config.ApplicationConfigStub;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -14,7 +14,7 @@ class AllowedCharacterValidationTest {
 
     @BeforeEach
     void setValidation() {
-        validation = new AllowedCharacterValidation(ApplicationConfigurationStub.getInstance());
+        validation = new AllowedCharacterValidation(ApplicationConfigStub.getInstance());
     }
 
     @ParameterizedTest

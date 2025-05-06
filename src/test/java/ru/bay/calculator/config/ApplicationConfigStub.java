@@ -1,26 +1,44 @@
 package ru.bay.calculator.config;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
-public class ApplicationConfigurationStub extends ApplicationConfiguration {
+public class ApplicationConfigStub implements ApplicationConfig {
+    private static final String VERSION = "1.0.0";
     private static final String QUIT_WORD = "exit";
     private static final Set<Character> SIGNS = Set.of('+', '-', '*', '/', '^');
     private static boolean isInstanceCreated = false;
 
-    private ApplicationConfigurationStub() {
+    private ApplicationConfigStub() {
         // Protection from creation via reflection
-        if (isInstanceCreated) throw new IllegalStateException("ApplicationConfiguration already initialized.");
+        if (isInstanceCreated) throw new IllegalStateException("ApplicationConfigStub already initialized.");
         isInstanceCreated = true;
     }
 
-    public static ApplicationConfigurationStub getInstance() {
+    public static ApplicationConfigStub getInstance() {
         return TestApplicationConfigurationHolder.INSTANCE;
+    }
+
+    @Override
+    public String getVersion() {
+        return VERSION;
     }
 
     @Override
     public String getQuitWord() {
         return QUIT_WORD;
+    }
+
+    @Override
+    public Map<String, String> getOperators() {
+        return Map.of(
+                "+", "Add",
+                "-", "Sub",
+                "*", "Multiply",
+                "/", "Div",
+                "^", "Pow"
+        );
     }
 
     @Override
@@ -48,6 +66,6 @@ public class ApplicationConfigurationStub extends ApplicationConfiguration {
     }
 
     private static class TestApplicationConfigurationHolder {
-        private static final ApplicationConfigurationStub INSTANCE = new ApplicationConfigurationStub();
+        private static final ApplicationConfigStub INSTANCE = new ApplicationConfigStub();
     }
 }

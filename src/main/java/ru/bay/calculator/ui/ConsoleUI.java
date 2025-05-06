@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import ru.bay.calculator.annotation.Component;
-import ru.bay.calculator.config.ApplicationConfiguration;
+import ru.bay.calculator.config.ApplicationConfig;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -32,12 +32,12 @@ public class ConsoleUI {
             """;
     private static final String GOOD_BYE_MSG = "Exiting the program. [Session duration - %s s.]%n";
 
-    private final ApplicationConfiguration applicationConfig;
+    private final ApplicationConfig applicationConfig;
     @Setter
     @Getter
     private LocalDateTime startOfSession;
 
-    public ConsoleUI(ApplicationConfiguration applicationConfig) {
+    public ConsoleUI(ApplicationConfig applicationConfig) {
         this.applicationConfig = applicationConfig;
     }
 

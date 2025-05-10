@@ -5,9 +5,12 @@ import ru.bay.calculator.config.ApplicationConfig;
 import ru.bay.calculator.config.ValidationConfig;
 
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 @Component
 public class ValidationService {
+    private static final Pattern VALID_ROMAN_NUMERAL = Pattern.compile("^M{0,3}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$");
+
     private final ApplicationConfig applicationConfig;
     private final ValidationConfig validationConfig;
 
@@ -28,5 +31,12 @@ public class ValidationService {
 
     public void validationChain(String input) throws IllegalArgumentException {
         validationConfig.getValidations().forEach(validation -> validation.validate(input));
+    }
+
+    public void verifyRomanNumeral(String input) throws IllegalArgumentException {
+        boolean found = !VALID_ROMAN_NUMERAL.matcher(input).find();
+        if (found) {
+            throw new IllegalArgumentException("Invalid Roman Numeral");
+        }
     }
 }

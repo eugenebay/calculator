@@ -22,18 +22,27 @@ public class ApplicationConfigImpl implements ApplicationConfig {
         this.allowedCharacters = populateAllowedCharacters(properties);
     }
 
+    @Override
     public String getVersion() {
         return properties.getVersion();
     }
 
+    @Override
     public String getQuitWord() {
         return properties.getQuitWord();
     }
 
+    @Override
     public Map<String, String> getOperators() {
         return Map.copyOf(properties.getOperators());
     }
 
+    @Override
+    public Map<Character, Integer> getRomans() {
+        return Map.copyOf(properties.getRomans());
+    }
+
+    @Override
     public Set<Character> getAllowedCharacters() {
         return Set.copyOf(allowedCharacters);
     }

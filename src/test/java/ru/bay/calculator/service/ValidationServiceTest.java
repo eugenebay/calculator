@@ -63,6 +63,18 @@ class ValidationServiceTest {
         assertThrows(IllegalArgumentException.class, () -> service.validationChain(input));
     }
 
+    @ParameterizedTest
+    @CsvSource({"I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M", "MMMD", "MMXXI", "MMMCMXCIX"})
+    void shouldDoesNotThrowExceptionWhenInputLineIsValidRomanNumeral(String input) {
+        assertDoesNotThrow(() -> service.verifyRomanNumeral(input));
+    }
+
+    @ParameterizedTest
+    @CsvSource({"IIII", "VV", "XXXX", "CCCC", "MMMM", "VX", "LC", "DM", "IC", "XM", "IIV", "XXL", "CCD", "VVVI"})
+    void shouldReturnIllegalArgumentExceptionWhenInputLineIsInvalidRomanNumeral(String input) {
+        assertThrows(IllegalArgumentException.class, () -> service.verifyRomanNumeral(input));
+    }
+
     private static Stream<Arguments> getArgumentsForRemoveSpacesMethod() {
         return Stream.of(
                 Arguments.of(EXPECTED_EXPRESSION, EXPECTED_EXPRESSION),

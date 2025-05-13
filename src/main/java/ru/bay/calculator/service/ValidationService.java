@@ -33,10 +33,10 @@ public class ValidationService {
         validationConfig.getValidations().forEach(validation -> validation.validate(input));
     }
 
-    public void verifyRomanNumeral(String input) throws IllegalArgumentException {
-        boolean found = !VALID_ROMAN_NUMERAL.matcher(input).find();
-        if (found) {
-            throw new IllegalArgumentException("Invalid Roman Numeral");
+    public void verifyRomanNumeral(String romanNumeral) throws IllegalArgumentException {
+        boolean found = VALID_ROMAN_NUMERAL.matcher(romanNumeral).find();
+        if (!found) {
+            throw new IllegalArgumentException("Invalid Roman numeral");
         }
     }
 }

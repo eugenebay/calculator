@@ -70,7 +70,7 @@ class ValidationServiceTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"IIII", "VV", "XXXX", "CCCC", "MMMM", "VX", "LC", "DM", "IC", "XM", "IIV", "XXL", "CCD", "VVVI"})
+    @CsvSource({"IIII", "VV", "VIIIIIII", "XXXX", "CCCC", "MMMM", "VX", "LC", "DM", "IC", "XM", "IIV", "XXL", "CCD", "VVVI"})
     void shouldReturnIllegalArgumentExceptionWhenInputLineIsInvalidRomanNumeral(String input) {
         assertThrows(IllegalArgumentException.class, () -> service.verifyRomanNumeral(input));
     }

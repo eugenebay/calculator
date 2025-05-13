@@ -2,6 +2,7 @@ package ru.bay.calculator.service;
 
 import ru.bay.calculator.annotation.Component;
 import ru.bay.calculator.config.OperationConfig;
+import ru.bay.calculator.model.ParserResult;
 
 @Component
 public class ComputationService {
@@ -19,6 +20,12 @@ public class ComputationService {
     }
 
     public String compute(String line) {
-        return line;
+        final var operations = operationConfig.getOperations();
+        final ParserResult parserResult = parserService.parse(line);
+        final int answer = operations.get(parserResult.operator())
+                .process(parserResult.firstNum(), parserResult.secondNum());
+        return parserResult.hasTwoRomanNumerals()
+                ? translationService.translateToRoman(answer)
+                : String.valueOf(answer);
     }
 }

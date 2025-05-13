@@ -42,6 +42,18 @@ public class ApplicationConfigStub implements ApplicationConfig {
     }
 
     @Override
+    public Map<Character, Integer> getRomans() {
+        return Map.of(
+                'I', 1,
+                'V', 5,
+                'X', 10,
+                'L', 50,
+                'C', 100,
+                'D', 500,
+                'M', 1000);
+    }
+
+    @Override
     public Set<Character> getAllowedCharacters() {
         var set = new HashSet<Character>();
         set.add('1');

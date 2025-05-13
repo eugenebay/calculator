@@ -14,10 +14,16 @@ import static ru.bay.calculator.utility.CalculatorUtil.newBufferedReaderInstance
 public class Application {
     private final ConsoleUI consoleUI;
     private final ValidationService validationService;
+    private final ComputationService computationService;
 
-    public Application(ConsoleUI consoleUI, ValidationService validationService) {
+    public Application(
+            ConsoleUI consoleUI,
+            ValidationService validationService,
+            ComputationService computationService
+    ) {
         this.consoleUI = consoleUI;
         this.validationService = validationService;
+        this.computationService = computationService;
     }
 
     public void run() {
@@ -53,7 +59,7 @@ public class Application {
     private void validateAndCompute(String input) {
         try {
             validationService.validationChain(input);
-            consoleUI.displayResult(input);
+            consoleUI.displayResult(computationService.compute(input));
         } catch (IllegalArgumentException | ArithmeticException ex) {
             consoleUI.displayExceptionMessage(ex);
         }

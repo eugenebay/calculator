@@ -10,5 +10,7 @@ public interface ApplicationConfig {
 
     Map<String, String> getOperators();
 
+    Map<Character, Integer> getRomans();
+
     Set<Character> getAllowedCharacters();
 }

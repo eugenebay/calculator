@@ -7,8 +7,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Comparator;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public final class CalculatorUtil {
     private CalculatorUtil() throws IllegalAccessException {
@@ -44,8 +44,23 @@ public final class CalculatorUtil {
         return new BufferedReader(new InputStreamReader(System.in));
     }
 
-    public static Map<Integer, Character> swapKeyValues(Map<Character, Integer> map) {
-        return map.entrySet().stream()
-                .collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
+    public static char[] getSymbolsSortedByValueDesc(Map<Character, Integer> map) {
+        var chars = map.entrySet().stream()
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .map(Map.Entry::getKey)
+                .toList();
+        var symbols = new char[chars.size()];
+        for (int i = 0; i < chars.size(); i++) {
+            symbols[i] = chars.get(i);
+        }
+        return symbols;
+    }
+
+    public static int[] getDigitValuesForSymbols(char[] symbols, Map<Character, Integer> map) {
+        int[] digits = new int[symbols.length];
+        for (int i = 0; i < symbols.length; i++) {
+            digits[i] = map.get(symbols[i]);
+        }
+        return digits;
     }
 }

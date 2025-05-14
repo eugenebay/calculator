@@ -12,25 +12,15 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
+import static ru.bay.calculator.utility.ColorUtil.*;
+import static ru.bay.calculator.utility.MessageUtil.GOOD_BYE_MSG;
+import static ru.bay.calculator.utility.MessageUtil.WELCOME_MSG;
+
 @Slf4j
 @Component
 public class ConsoleUI {
-    public static final String ANSI_GREEN = "\u001B[32m";
-    public static final String ANSI_RESET = "\u001B[0m";
-    private static final String WELCOME_MSG = """
-                 ______
-                /_____/\\
-               /_____\\\\ \\
-              /_____\\ \\\\ /\\
-             /_____/ \\/ / /\\
-            /_____/ /   \\//\\\\
-            \\_____\\//\\   / /
-             \\_____/ / /\\ /\t\tCalculator v%s
-              \\_____/ \\\\ \\\t\tCopyright (c) 2025 Eugene BAY
-               \\_____\\ \\\\\t\tMIT License.
-                \\_____\\/\t\t%s, %s
-            """;
-    private static final String GOOD_BYE_MSG = "Exiting the program. [Session duration - %s s.]%n";
+    private static final int SECONDS_PER_MINUTE = 60;
+    private static final int SECONDS_PER_HOUR = 3600;
 
     private final ApplicationConfig applicationConfig;
     @Setter
@@ -45,12 +35,12 @@ public class ConsoleUI {
     @SuppressWarnings("java:S106")
     public void displayWelcomeMessage() {
         setStartOfSession(LocalDateTime.now(ZoneId.systemDefault()));
-        System.out.println(ANSI_GREEN + String.format(
+        System.out.println(GREEN + String.format(
                 WELCOME_MSG,
                 applicationConfig.getVersion(),
                 System.getProperty("os.name"),
                 getFormattedTime(getStartOfSession())
-        ) + ANSI_RESET);
+        ) + RESET);
     }
 
     private String getFormattedTime(LocalDateTime localDateTime) {
@@ -59,18 +49,30 @@ public class ConsoleUI {
 
     @SuppressWarnings("java:S106")
     public void displayGoodByeMessage() {
-        System.err.printf(GOOD_BYE_MSG, Duration.between(getStartOfSession(), LocalDateTime.now(ZoneId.systemDefault()))
-                .getSeconds());
+        System.out.println(GREY + String.format(GOOD_BYE_MSG, getDurationOfSession(getStartOfSession())) + RESET);
+    }
+
+    public String getDurationOfSession(LocalDateTime startOfSession) {
+        var duration = Duration.between(startOfSession, LocalDateTime.now(ZoneId.systemDefault()));
+        long totalSecond = duration.getSeconds();
+        long hours = totalSecond / SECONDS_PER_HOUR;
+        long minutes = (totalSecond % SECONDS_PER_HOUR) / SECONDS_PER_MINUTE;
+        long seconds = totalSecond % SECONDS_PER_MINUTE;
+        var sb = new StringBuilder();
+        if (hours > 0) sb.append(hours).append("h. ");
+        if (minutes > 0) sb.append(minutes).append("m. ");
+        if (seconds > 0) sb.append(seconds).append("s.");
+        return sb.toString().trim();
     }
 
     @SuppressWarnings("java:S106")
     public void displayResult(String line) {
-        System.out.println(line);
+        System.out.println(GREEN + line + RESET);
     }
 
     @SuppressWarnings("java:S106")
     public void displayExceptionMessage(Exception ex) {
-        System.err.println(ex.getMessage());
+        System.err.println(TOMATO + ex.getMessage() + RESET);
     }
 
     public void handleException(IOException ex) {

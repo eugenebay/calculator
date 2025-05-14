@@ -1,5 +1,6 @@
 package ru.bay.calculator.utility;
 
+import lombok.experimental.UtilityClass;
 import ru.bay.calculator.annotation.Disabled;
 import ru.bay.calculator.annotation.Prototype;
 
@@ -10,11 +11,8 @@ import java.nio.file.Path;
 import java.util.Comparator;
 import java.util.Map;
 
-public final class CalculatorUtil {
-    private CalculatorUtil() throws IllegalAccessException {
-        throw new IllegalAccessException("Attempt to initialize final class.");
-    }
-
+@UtilityClass
+public class CalculatorUtil {
     public static <T> String simplifyName(Class<T> clazz) {
         var simpleName = clazz.getSimpleName();
         return simpleName.replace("Impl", "");

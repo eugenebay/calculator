@@ -23,7 +23,7 @@ public class ComputationService {
         final var operations = operationConfig.getOperations();
         final ParserResult parserResult = parserService.parse(line);
         final int answer = operations.get(parserResult.operator())
-                .process(parserResult.firstNum(), parserResult.secondNum());
+                .process(parserResult.firstNumber(), parserResult.secondNumber());
         return parserResult.hasTwoRomanNumerals()
                 ? translationService.translateToRoman(answer)
                 : String.valueOf(answer);

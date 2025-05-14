@@ -47,9 +47,9 @@ class ParserServiceTest {
     ) {
         var parserResult = service.parse(input);
         assertAll("Asserting ParserResult",
-                () -> assertEquals(firstNum, parserResult.firstNum()),
+                () -> assertEquals(firstNum, parserResult.firstNumber()),
                 () -> assertEquals(operator, parserResult.operator()),
-                () -> assertEquals(secondNum, parserResult.secondNum())
+                () -> assertEquals(secondNum, parserResult.secondNumber())
         );
     }
 

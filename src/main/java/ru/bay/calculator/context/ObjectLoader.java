@@ -25,9 +25,7 @@ class ObjectLoader implements ObjectFinder {
     private <T> void initializationOfObjects(List<Class<?>> classes) {
         classes.forEach(clazz -> {
             T instance = (T) ObjectFactory.GET.createObject(clazz);
-            if (Objects.nonNull(instance)) {
-                log.info("The {} class has been created.", instance.getClass().getSimpleName());
-            }
+            log.debug("The {} class has been created.", instance.getClass().getSimpleName());
         });
     }
 }

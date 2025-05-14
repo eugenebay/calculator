@@ -2,7 +2,6 @@ package ru.bay.calculator.utility;
 
 import lombok.experimental.UtilityClass;
 import ru.bay.calculator.annotation.Disabled;
-import ru.bay.calculator.annotation.Prototype;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -32,10 +31,6 @@ public class CalculatorUtil {
 
     public static boolean isNotDisabled(Class<?> clazz) {
         return !clazz.isAnnotationPresent(Disabled.class);
-    }
-
-    public static boolean isSingleton(Class<?> clazz) {
-        return !clazz.isAnnotationPresent(Prototype.class);
     }
 
     public static BufferedReader newBufferedReaderInstance() {

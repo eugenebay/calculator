@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import static java.lang.invoke.MethodType.methodType;
-import static ru.bay.calculator.utility.CalculatorUtil.isSingleton;
 import static ru.bay.calculator.utility.CalculatorUtil.simplifyName;
 
 // Suppress SonarQube enum singleton warning.
@@ -34,9 +33,7 @@ public enum ObjectFactory implements ObjectFinder {
             instance = (T) lookup.findConstructor(clazz, methodType(void.class, types))
                     .invokeWithArguments(param);
         }
-        return isSingleton(clazz)
-                ? registerAnObject(instance)
-                : instance;
+        return registerAnObject(instance);
     }
 
     private <T> T registerAnObject(T instance) {

@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ru.bay.calculator</groupId>
     <artifactId>calculator</artifactId>
-    <version>2.8.14052025</version>
+    <version>2.9.0</version>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
@@ -157,6 +157,14 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.5.0</version>
+                <configuration>
+                    <mainClass>ru.bay.calculator.Calculator</mainClass>
+                </configuration>
             </plugin>
         </plugins>
     </build>
